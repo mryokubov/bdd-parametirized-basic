@@ -1,5 +1,7 @@
 package step_definitions;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -14,13 +16,27 @@ import utils.Driver;
  */
 public class LoginStepDefs {
 
-    private WebDriver driver;
     private LoginPage loginPage;
     private CustomerPage customerPage;
+    private WebDriver driver;
+
+    //before cucumber scenario
+    @Before
+    public void setUp(){
+        driver = Driver.getDriver();
+    }
+
+    //after cucumber scenario
+    @After
+    public void cleanUp(){
+        if (driver != null){
+            driver.quit();
+        }
+    }
 
     @Given("user is on the login page")
     public void user_is_on_the_login_page() {
-        driver = Driver.getDriver(); //may return chrome,firefox,ie,safari
+
         loginPage = new LoginPage(driver);
         loginPage.visitMainPage();
         loginPage.verifyMainPageTitle();
@@ -40,14 +56,9 @@ public class LoginStepDefs {
 
     @Then("user should be navigated to homepage")
     public void user_should_be_navigated_to_homepage() {
-
         customerPage = new CustomerPage(driver);
         customerPage.verifyPageHeading();
         customerPage.verifyWelcomeMsg();
-
-        if (driver != null){
-            driver.quit();
-        }
     }
 
 }

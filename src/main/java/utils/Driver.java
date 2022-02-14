@@ -15,6 +15,10 @@ import java.time.Duration;
  * Created by tairovich_jr on 2022-02-12.
  */
 public class Driver {
+
+    //so that no one can instantiate this class
+    private Driver(){}
+
     private static WebDriver driver;
 
     public static WebDriver getDriver() {
