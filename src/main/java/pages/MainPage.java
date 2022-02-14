@@ -40,6 +40,9 @@ public class MainPage {
         signInLink.click(); //click on sign in link
     }
 
+    public void visitContactUsPage(){
+        contactUsLink.click();
+    }
 }
 
 

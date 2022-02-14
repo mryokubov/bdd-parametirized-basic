@@ -83,6 +83,7 @@ public class ContactUsPage extends MainPage{
     @FindBy(linkText = "contact us")
     private WebElement contactUsLink;
 
+    private boolean loggedIn = false;
 
     public void visitHomePage(){
         //           http:automationpractice.com
@@ -109,12 +110,27 @@ public class ContactUsPage extends MainPage{
 
     public void enterEmailAddress(String emailAddress){
         Assert.assertEquals(emailLabel.getText(), "Email address");
-        emailInput.sendKeys(emailAddress);
+        String value = emailInput.getAttribute("value");
+        if (value.isEmpty() || value == null){
+            emailInput.sendKeys(emailAddress);
+        }else{
+            //if email input is not empty, we are signed in
+            loggedIn = true;
+        }
+
     }
 
     public void enterOrderReference(String orderRef){
         Assert.assertEquals(orderReferenceLabel.getText(), "Order reference");
-        getOrderReferenceInput.sendKeys(orderRef);
+        if (loggedIn){
+            //we have to deal with the drop down
+            WebElement id_order = driver.findElement(By.xpath("//select[@name='id_order']"));
+            Select s = new Select(id_order);
+            s.selectByIndex(0);
+        }else{
+            getOrderReferenceInput.sendKeys(orderRef);
+        }
+
     }
 
     public void attachFile(String filePath){
@@ -133,8 +149,11 @@ public class ContactUsPage extends MainPage{
         Assert.assertTrue(sendBtn.isEnabled());
         sendBtn.click();
         Thread.sleep(3000);
-        WebElement successOrFailure = driver.findElement(By.xpath("//div[@id='center_column']"));
 
+    }
+
+    public void verifyAlertMessage(){
+        WebElement successOrFailure = driver.findElement(By.xpath("//div[@id='center_column']"));
         if (successOrFailure.getText().contains("There is 1 error")){
             verifyFailureAlertBanner();
         }else if(successOrFailure.getText().contains("message has been successfully")){

@@ -1,3 +1,4 @@
+@regression
 Feature: Test automationpractice.com contact us functionlality
 
   Background: Common user actions for various scenarious
@@ -6,14 +7,15 @@ Feature: Test automationpractice.com contact us functionlality
 
   Scenario: Contact Us while NOT signed in
 
-    When user selects "Customer Service"
+    When user selects "Customer service"
     Then user enters "tom.peterson100@yahoo.com"
     Then user enters order reference as "AD90LKK12"
-    Then user attaches file "Users/Downloads/java.png"
+    Then user attaches file "/Users/omonjonyokubov/Downloads/java.png"
     And user types message "Hello, I think there is a problem with my order. Please I need refunds"
     And user clicks on send button
     Then user should see the success alert message
 
+  @smoke
   Scenario: Contact Us while signed in
     Then user logs in with valid credentials "gislason.alejandrina@gmail.com" and "Gislason!l12"
     When user selects "Webmaster"
