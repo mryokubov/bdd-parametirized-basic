@@ -24,7 +24,7 @@ public class ContactUsStepDefs {
     //before cucumber scenario
     @Before
     public void setUp(){
-        driver = Driver.getDriver();
+        driver = Driver.getDriver(); //chrome
     }
 
     //after cucumber scenario
