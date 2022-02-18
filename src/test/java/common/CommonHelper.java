@@ -37,6 +37,7 @@ public class CommonHelper {
         }
     }
 
+    //this method returns current date and time with minute time stamps
     private String getCurrentDateAndTime() {
         String str = null;
         try {
