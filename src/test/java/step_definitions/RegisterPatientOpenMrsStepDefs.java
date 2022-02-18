@@ -1,13 +1,16 @@
 package step_definitions;
 
+import common.CommonHelper;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import utils.Driver;
 
@@ -17,7 +20,7 @@ import java.util.Map;
 /**
  * Created by tairovich_jr on 2022-02-15.
  */
-public class RegisterPatientOpenMrsStepDefs {
+public class RegisterPatientOpenMrsStepDefs extends CommonHelper {
 
     private WebDriver driver;
 
@@ -27,10 +30,8 @@ public class RegisterPatientOpenMrsStepDefs {
     }
 
     @After
-    public void cleanUp(){
-        if (driver != null){
-            driver.quit();
-        }
+    public void cleanUp(Scenario scenario){
+       takeScreenshot(scenario, driver);
     }
 
     @Given("user logins into open mrs application")
@@ -97,8 +98,9 @@ public class RegisterPatientOpenMrsStepDefs {
     }
 
     @Then("user clicks on confirm button")
-    public void user_clicks_on_confirm_button() {
+    public void user_clicks_on_confirm_button() throws InterruptedException {
         driver.findElement(By.xpath("//input[@value='Confirm']")).click();
+        Thread.sleep(3000);
     }
 
     @Then("user should be navigated to patient details page")
